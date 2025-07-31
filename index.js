@@ -17,10 +17,15 @@ async function fetchFrases() {
   }
 }
 
-app.get('/', (req, res) => {
+app.get('/api/frase', (req, res) => {
   const randomIndex = Math.floor(Math.random() * frases.length);
   return res.json({ message: frases[randomIndex] });
 });
+
+app.get('/api/frase/recargar', async (req, res) => {
+  await fetchFrases();
+  return res.json({ message: 'Frases recargadas correctamente.' });
+})
 
 fetchFrases().then(() => {
   app.listen(3000, () => {
